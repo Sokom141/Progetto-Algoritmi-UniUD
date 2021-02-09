@@ -1,10 +1,15 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include "core.hpp"
+#include "Timer.hpp"
 
 int main(int argc, char **argv)
 {
-    auto s = generate_random_str(50, 10);
+    std::vector<std::pair<int, double>> v{{1, 1.00}, {5, 9.99}, {10, 10.00}};
+    std::vector<double> v1{};
+
+    auto s = generate_random_str(5000, 10);
 
     std::cout << s << '\n';
 
@@ -12,12 +17,24 @@ int main(int argc, char **argv)
 
     std::cout << time << "ns\n";
 
-    auto a = period_naive(s);
-    auto b = period_smart(s);
+    int a, b;
+    {
+        Timer<double, std::chrono::nanoseconds> t{v1};
+        a = period_naive(s);
+    }
 
-    std::cout << "Naive implementation result: " << a << "\nSmart implementation result: " << b << '\n';
+    {
+        Timer<double, std::chrono::nanoseconds> t{v1};
+        b = period_smart(s);
+    }
 
-    std::vector<std::pair<int, double>> v{{1, 1.00}, {5, 9.99}, {10, 10.00}};
+    std::cout << "Naive implementation result: " << a << " time: " << v1[0] << "ns\n";
+    std::cout << "Smart implementation result: " << b << " time: " << v1[1] << "ns\n";
+
+    for (auto &i : v1)
+    {
+        std::cout << i << "ns\n";
+    }
 
     write_csv("test.csv", v, "N", "TIME");
 
