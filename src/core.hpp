@@ -41,7 +41,7 @@ double get_system_resolution();
  */
 template <class T, class U>
 void write_csv(const std::string &filename, const std::vector<std::pair<T, U>> &dataset,
- const std::string& f_col_name, const std::string& s_col_name)
+                const std::string& f_col_name, const std::string& s_col_name)
 {
     std::ofstream f(filename);
     if (!f.is_open())

@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
     std::vector<std::pair<int, double>> v{{1, 1.00}, {5, 9.99}, {10, 10.00}};
 
-    write_csv("test.txt", v, "N", "TIME");
+    write_csv("test.csv", v, "N", "TIME");
 
     return EXIT_SUCCESS;
 }
