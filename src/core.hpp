@@ -4,7 +4,7 @@
 #include <iostream>
 
 /**
- *  Generate a random string based on length and a period.
+ *  Generate a random string with a random period, based on length and a number of characters.
  *  @param length length of the string
  *  @param period period length
  *  @return A standard randomly generated string. 
