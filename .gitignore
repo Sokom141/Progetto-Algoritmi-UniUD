@@ -191,3 +191,7 @@ dmypy.json
 
 # main bin
 src/main
+
+# images
+*.png
+*.jpg
