@@ -4,6 +4,13 @@
 #include <vector>
 #include <chrono>
 
+/**
+ * An easy to use timer based on RAII to reduce boilerplate code. 
+ * When the destructor is called the timer is stopped and the result is 
+ * pushed on the specified vector.
+ * @param <T> the type of vector
+ * @param <U> the std::chrono type
+ */
 template <class T, class U>
 class Timer
 {
