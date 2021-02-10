@@ -182,3 +182,17 @@ dmypy.json
 
 # vscode
 .vscode/
+
+# PyCharm
+.idea/
+
+# csv
+*.csv
+
+# main bin
+src/main
+build/*
+
+# images
+*.png
+*.jpg
