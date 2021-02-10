@@ -35,8 +35,8 @@ int main(int argc, char **argv)
 
     std::vector<std::pair<int, double>> smart_t;
     std::vector<std::pair<int, double>> naive_t;
-    //smart_t.reserve(iter);
-    //naive_t.reserve(iter);
+    smart_t.reserve(iter);
+    naive_t.reserve(iter);
 
     std::array<std::string, precision> strs;
 
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
         // Period smart timing:
 
         {
-            Timer<double, std::chrono::milliseconds> tmr(avg_smart_t);
+            Timer<double, std::chrono::microseconds> tmr(avg_smart_t);
             for (int j = 0; j < precision; ++j)
             {
                 period_smart(strs[j]);
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 
         // Period naive timing:
 
-        if (i > 0 && avg_naive_t[i - 1] > 2200.0)
+        if (i > 0 && avg_naive_t[i - 1] > 2200000.0) // microseconds
         {
             naive_run = false;
         }
@@ -72,7 +72,7 @@ int main(int argc, char **argv)
         if (naive_run)
         {
             {
-                Timer<double, std::chrono::milliseconds> tmr(avg_naive_t);
+                Timer<double, std::chrono::microseconds> tmr(avg_naive_t);
                 for (int j = 0; j < precision; ++j)
                 {
                     period_naive(strs[j]);
@@ -81,10 +81,6 @@ int main(int argc, char **argv)
             avg_naive_t[i] /= precision;
             std::cout << avg_naive_t[i-1] << "ns\n";
             naive_t.push_back({n, avg_naive_t[i]});
-        } else {
-            std::cout << "Not calculating naive\n";
-            std::cout << avg_naive_t[i-1] << "ns\n";
-            naive_run = false;
         }
 
         std::cout << i << '/' << iter << '\n';

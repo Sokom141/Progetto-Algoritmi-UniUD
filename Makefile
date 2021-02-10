@@ -22,7 +22,7 @@ create_dirs:
 	mkdir $(OBJ_DIR)
 
 clean:
-	@rm $(APP_DIR)/* $(OBJ_DIR)/*
+	@rm $(APP_DIR)/* $(OBJ_DIR)/* *.csv
 
 info:
 	@echo "[*] Application dir: $(APP_DIR)"
