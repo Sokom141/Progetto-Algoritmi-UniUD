@@ -29,6 +29,12 @@ public:
         m_end = std::chrono::steady_clock::now();
         m_v.push_back(std::chrono::duration_cast<U>(m_end - m_start).count());
     }
+
+    U get_current_time()
+    {
+        auto time_point = std::chrono::steady_clock::now();
+        return std::chrono::duration_cast<U>(time_point).count();
+    }
 };
 
 #endif // _TIMER_C_H
