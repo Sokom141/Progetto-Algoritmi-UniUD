@@ -31,7 +31,7 @@ int main(int argc, char **argv)
     std::cout << "Naive implementation result: " << a << " time: " << v1[0] << "ns\n";
     std::cout << "Smart implementation result: " << b << " time: " << v1[1] << "ns\n";
 
-    for (auto &i : v1)
+    for (const auto &i : v1)
     {
         std::cout << i << "ns\n";
     }
