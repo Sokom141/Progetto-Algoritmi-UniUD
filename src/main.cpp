@@ -7,7 +7,8 @@
 #include "core.hpp"
 #include "Timer.hpp"
 
-int debug_main();
+void debug_main();
+void calc_time();
 
 int main(int argc, char **argv)
 {
@@ -20,14 +21,22 @@ int main(int argc, char **argv)
         }
     }
 
+    calc_time();
+
+    return EXIT_SUCCESS;
+}
+
+void calc_time()
+{
     constexpr int a{1000};
     constexpr int b{500000};
     const auto c{exp(((log(b)) - log(a)) / 119)};
 
     constexpr int iter{120};
     constexpr int precision{100};
-    bool naive_run = true;
+    using t_precision = std::chrono::nanoseconds;
 
+    bool naive_run = true;
     std::vector<double> avg_smart_t;
     std::vector<double> avg_naive_t;
     avg_smart_t.reserve(iter);
@@ -35,8 +44,8 @@ int main(int argc, char **argv)
 
     std::vector<std::pair<int, double>> smart_t;
     std::vector<std::pair<int, double>> naive_t;
-    //smart_t.reserve(iter);
-    //naive_t.reserve(iter);
+    smart_t.reserve(iter);
+    naive_t.reserve(iter);
 
     std::array<std::string, precision> strs;
 
@@ -49,11 +58,10 @@ int main(int argc, char **argv)
             strs[j] = generate_random_str(n, 2);
         }
 
-
         // Period smart timing:
 
         {
-            Timer<double, std::chrono::milliseconds> tmr(avg_smart_t);
+            Timer<double, t_precision> tmr(avg_smart_t);
             for (int j = 0; j < precision; ++j)
             {
                 period_smart(strs[j]);
@@ -64,7 +72,7 @@ int main(int argc, char **argv)
 
         // Period naive timing:
 
-        if (i > 0 && avg_naive_t[i - 1] > 2200.0)
+        if (i > 0 && avg_naive_t[i - 1] > 2200000000.0) // nanoseconds
         {
             naive_run = false;
         }
@@ -72,19 +80,14 @@ int main(int argc, char **argv)
         if (naive_run)
         {
             {
-                Timer<double, std::chrono::milliseconds> tmr(avg_naive_t);
+                Timer<double, t_precision> tmr(avg_naive_t);
                 for (int j = 0; j < precision; ++j)
                 {
                     period_naive(strs[j]);
                 }
             }
             avg_naive_t[i] /= precision;
-            std::cout << avg_naive_t[i-1] << "ns\n";
             naive_t.push_back({n, avg_naive_t[i]});
-        } else {
-            std::cout << "Not calculating naive\n";
-            std::cout << avg_naive_t[i-1] << "ns\n";
-            naive_run = false;
         }
 
         std::cout << i << '/' << iter << '\n';
@@ -92,11 +95,9 @@ int main(int argc, char **argv)
 
     write_csv("tempi_smart.csv", smart_t, "N", "TIME");
     write_csv("tempi_naive.csv", naive_t, "N", "TIME");
-
-    return EXIT_SUCCESS;
 }
 
-int debug_main()
+void debug_main()
 {
     std::vector<std::pair<int, double>> v{{1, 0.53}, {5, 9.99}, {10, 14.002}, {100, 140.002}, {1000, 1400.002}};
     std::vector<double> v1{};
@@ -129,6 +130,4 @@ int debug_main()
     }
 
     write_csv("tempi.csv", v, "N", "TIME");
-
-    return 0;
 }
