@@ -7,7 +7,10 @@ fi
 make create_dirs
 make
 
-./build/apps/main
+./build/apps/main --one
+./build/apps/main --two
+./build/apps/main --three
+./build/apps/main --four
 
 source venv/bin/activate
 cd src/
