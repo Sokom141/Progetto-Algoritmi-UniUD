@@ -45,12 +45,18 @@ def plotta_risultati(percorsoSmart, percorsoNaive):
 
     data["N"] = pd.to_numeric(data["N"])
     plt.figure(figsize=(20, 10))
-    sns.lineplot(data.N, data.TIME)
-    sns.lineplot(dataSmart.N, dataSmart.TIME)
-    sns.scatterplot(data.N, data.TIME)
-    sns.scatterplot(dataSmart.N, dataSmart.TIME)
+    ax1 = sns.lineplot(data.N, data.TIME)
+    ax2 = sns.lineplot(dataSmart.N, dataSmart.TIME)
+    scatter1 = sns.scatterplot(data.N, data.TIME)
+    scatter2 = sns.scatterplot(dataSmart.N, dataSmart.TIME)
+    ax1.set(xlabel="LUNGHEZZA STRINGA")
 
-    plt.title("Stima tempi")
+    ax1.set(ylabel="TEMPO MEDIO")
+
+    plt.legend(title="Legenda", title_fontsize="xx-large", loc='upper right', labels=['Naive', 'Smart'],
+               fontsize="xx-large", facecolor="lightgrey")
+
+    plt.title("Tempi di computazione dei due algoritmi", fontdict={"fontsize": "xx-large", "color": "black"})
     plt.show()
 
 
@@ -75,10 +81,6 @@ def plotta_risultati_scala_logaritmica(percorsoSmart, percorsoNaive):
 
     dataSmart["N"] = pd.to_numeric(dataSmart["N"])
 
-    # dataSmart["TIME"]= dataSmart["TIME"].map(lambda x: math.log(x))
-
-    # dataSmart["N"]= dataSmart["N"].map(lambda x: math.log(x))
-
     # apro il file csv e creo una lista con il nome delle colonne e una con i risultati
     with open(percorsoNaive, "r", encoding='utf-8-sig') as f:
         lettore = csv.reader(f, delimiter=",")
@@ -98,24 +100,22 @@ def plotta_risultati_scala_logaritmica(percorsoSmart, percorsoNaive):
 
     data["N"] = pd.to_numeric(data["N"])
 
-    # data["TIME"]= data["TIME"].map(lambda x: math.log(x))
-
-    # data["N"]= data["N"].map(lambda x: math.log(x))
-
     plt.figure(figsize=(20, 10))
     ax1 = sns.lineplot(data.N, data.TIME)
     ax2 = sns.lineplot(dataSmart.N, dataSmart.TIME)
 
-    ax1.set(xscale="log")
-    ax2.set(xscale="log")
+    ax1.set(xscale="log", xlabel="LUNGHEZZA STRINGA")
 
-    ax1.set(yscale="log")
-    ax2.set(yscale="log")
+    ax1.set(yscale="log", ylabel="TEMPO MEDIO")
 
-    sns.scatterplot(data.N, data.TIME)
+    sns.scatterplot(data.N, data.TIME, )
     sns.scatterplot(dataSmart.N, dataSmart.TIME)
 
-    plt.title("Stima tempi con scala logaritmica")
+    plt.legend(title="Legenda", title_fontsize="xx-large", loc='upper right', labels=['Naive', 'Smart'],
+               fontsize="xx-large", facecolor="lightgrey")
+
+    plt.title("Tempi di computazione dei due algoritmi con scala logaritmica",
+              fontdict={"fontsize": "xx-large", "color": "black"})
     plt.show()
 
 
