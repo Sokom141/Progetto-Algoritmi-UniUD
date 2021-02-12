@@ -76,7 +76,7 @@ int period_smart(const std::string &str)
     return n - vec[n - 1];
 }
 
-double get_system_resolution()
+double get_system_resolution() 
 {
     auto start = std::chrono::steady_clock::now();
     std::chrono::steady_clock::time_point end;

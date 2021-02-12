@@ -33,8 +33,13 @@ void calc_time()
     const auto c{exp(((log(b)) - log(a)) / 119)};
 
     constexpr int iter{120};
-    constexpr int precision{100};
+    constexpr int precision{200};
     using t_precision = std::chrono::nanoseconds;
+
+    constexpr double max_error{0.001};
+    const auto resolution{get_system_resolution()};
+
+    const int t_min{resolution * ((1 / max_error) + 1)};
 
     bool naive_run = true;
     std::vector<double> avg_smart_t;
@@ -52,6 +57,7 @@ void calc_time()
     for (int i = 0; i < iter; ++i)
     {
         int n{a * pow(c, i)};
+        int count{0};
 
         for (int j = 0; j < precision; ++j)
         {
@@ -62,13 +68,19 @@ void calc_time()
 
         {
             Timer<double, t_precision> tmr(avg_smart_t);
-            for (int j = 0; j < precision; ++j)
+
+            do
             {
-                period_smart(strs[j]);
-            }
+                period_smart(strs[count]);
+                ++count;
+            } while (tmr.get_current_time() <= t_min);
         }
-        avg_smart_t[i] /= precision;
+
+        avg_smart_t[i] /= count;
         smart_t.push_back({n, avg_smart_t[i]});
+
+        // reset counter
+        count = 0;
 
         // Period naive timing:
 
@@ -81,12 +93,14 @@ void calc_time()
         {
             {
                 Timer<double, t_precision> tmr(avg_naive_t);
-                for (int j = 0; j < precision; ++j)
+
+                do
                 {
-                    period_naive(strs[j]);
-                }
+                    period_naive(strs[count]);
+                    ++count;
+                } while (tmr.get_current_time() <= t_min);
             }
-            avg_naive_t[i] /= precision;
+            avg_naive_t[i] /= count;
             naive_t.push_back({n, avg_naive_t[i]});
         }
 
