@@ -14,30 +14,12 @@ void calc_var(random_str_method str_method);
 constexpr int a{1000};
 constexpr int b{500000};
 const auto c{exp(((log(b)) - log(a)) / 119)};
-
 constexpr int iter{120};
 constexpr int precision{200};
 using t_precision = std::chrono::nanoseconds;
-
 constexpr double max_error{0.001};
 const auto resolution{get_system_resolution()};
-
 const int t_min{resolution * ((1 / max_error) + 1)};
-
-std::string name(random_str_method m)
-{
-    switch (m)
-    {
-    case random_str_method::ONE:
-        return "one";
-    case random_str_method::TWO:
-        return "two";
-    case random_str_method::THREE:
-        return "three";
-    default:
-        return "four";
-    }
-}
 
 int main(int argc, char **argv)
 {

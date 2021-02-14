@@ -26,9 +26,6 @@ void period_from(std::string &s, const int start, const int lim)
 
 std::string generate_random_str(const int length, const int char_num, random_str_method method)
 {
-    struct timeval tp;
-    gettimeofday(&tp, NULL);
-    long ms{tp.tv_sec * 1000 + tp.tv_usec / 1000};
     unsigned int seed = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
     std::srand(seed);
 
@@ -146,4 +143,19 @@ double get_system_resolution()
     } while (start == end);
 
     return std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
+}
+
+std::string name(random_str_method m)
+{
+    switch (m)
+    {
+    case random_str_method::ONE:
+        return "one";
+    case random_str_method::TWO:
+        return "two";
+    case random_str_method::THREE:
+        return "three";
+    default:
+        return "four";
+    }
 }

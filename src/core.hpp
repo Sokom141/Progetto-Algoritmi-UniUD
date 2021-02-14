@@ -5,6 +5,9 @@
 #include <fstream>
 #include <vector>
 
+/**
+ * enum class for string generation method
+ */
 enum class random_str_method
 {
     ONE,
@@ -12,6 +15,12 @@ enum class random_str_method
     THREE,
     FOUR
 };
+
+/**
+ * Get the string name of the enum class 
+ * @param m the enum class member
+ */
+std::string name(random_str_method m);
 
 /**
  *  Generate a random string with a random period, based on length and a number of characters.
